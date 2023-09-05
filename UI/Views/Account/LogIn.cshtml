@@ -1,0 +1,41 @@
+@model LoginViewModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LogIn</title>
+</head>
+<body>
+<div class="form">
+    <ul class="tab-group">
+        <li class="tab"><a href="#login">Log In</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div id="login">   
+              <h1>Welcome Back!</h1>
+                <form asp-action="LogIn" asp-controller="Account" method="post">
+                  <div class="field-wrap">
+                      <label asp-for="Email">
+                          Email Address<span class="req">*</span>
+                      </label>
+                      <input asp-for="Email" type="email" required autocomplete="off" />
+                      <span asp-validation-for="Email" class="text-danger"></span>
+                  </div>
+                  <div class="field-wrap">
+                      <label asp-for="Password">
+                          Set A Password<span class="req">*</span>
+                      </label>
+                      <input asp-for="Password" type="password" required autocomplete="off" />
+                      <span asp-validation-for="Password" class="text-danger"></span>
+                  </div>
+
+                  <p class="forgot"><a href="#">Forgot Password?</a></p>
+                        
+                <button class="button button-block">Log In</button>
+              </form>
+            </div>
+        </div>
+  </div>
+</body>
+</html>

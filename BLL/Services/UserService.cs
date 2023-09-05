@@ -38,5 +38,40 @@ public class UserService : IUserService
         
         return new Result<bool>(true);
     }
+
+    public async Task<Result<bool>> LoginAsync(AppUser user, string password)
+    {
+        if (user == null)
+        {
+            return new Result<bool>(false, $"{nameof(user)} not found");
+        }
+
+        var checkPassword = await _userManager.CheckPasswordAsync(user, password);
+
+        if (!checkPassword)
+        {
+            return new Result<bool>(false, $"{nameof(password)} incorrect");
+        }
+        
+        var loginResult = await _signInManager.PasswordSignInAsync(user, password, false, false);
+
+        if (!loginResult.Succeeded)
+        {
+            return new Result<bool>(false, "Failed to log in");
+        }
+        
+        return new Result<bool>(true);
+    }
+
+    public async Task<Result<AppUser>> FindUserByEmail(string email)
+    {
+        var appUser = await _userManager.FindByEmailAsync(email);
+
+        if (appUser == null)
+        {
+            return new Result<AppUser>(false, $"Failed to find user by email : {email}");
+        }
+
+        return new Result<AppUser>(true, data: appUser);
     }
 }

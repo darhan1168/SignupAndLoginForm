@@ -47,3 +47,39 @@ public class AccountController : Controller
         
         return View(model);
     }
+    
+    [HttpGet]
+    public IActionResult LogIn()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> LogIn(LoginViewModel model)
+    {
+        if (ModelState.IsValid)
+        {
+            var findAppUserResult = await _userService.FindUserByEmail(model.Email);
+
+            if (!findAppUserResult.IsSuccessful)
+            {
+                TempData["ErrorMessage"] = findAppUserResult.Message;
+                
+                return View(model);
+            }
+
+            var loginResult = await _userService.LoginAsync(findAppUserResult.Data, model.Password);
+            
+            if (!loginResult.IsSuccessful)
+            {
+                TempData["ErrorMessage"] = loginResult.Message;
+                
+                return View(model);
+            }
+            
+            return RedirectToAction("Privacy", "Home");
+        }
+        
+        return View(model);
+    }
+}
