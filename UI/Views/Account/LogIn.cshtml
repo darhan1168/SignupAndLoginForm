@@ -6,6 +6,10 @@
     <title>LogIn</title>
 </head>
 <body>
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
 <div class="form">
     <ul class="tab-group">
         <li class="tab"><a href="#login">Log In</a></li>
