@@ -1,14 +1,13 @@
+using BLL;
 using Core.Models;
 using Microsoft.AspNetCore.Identity;
-using DAL;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddDbContext<DAL.AppContext>(options =>
 {

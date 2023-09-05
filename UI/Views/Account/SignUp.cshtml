@@ -1,0 +1,61 @@
+@model RegisterViewModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SignUp</title>
+</head>
+<body>
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+<div class="form">
+    <ul class="tab-group">
+          <li class="tab active"><a href="#signup">Sign Up</a></li>
+    </ul>
+        
+        <div class="tab-content">
+          <div id="signup">   
+            <h1>Sign Up for Free</h1>
+            
+           <form asp-action="SignUp" asp-controller="Account" method="post">
+               <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+               <div class="top-row">
+                   <div class="field-wrap">
+                       <label asp-for="FirstName">
+                           First Name<span class="req">*</span>
+                       </label>
+                       <input asp-for="FirstName" type="text" required autocomplete="off" />
+                       <span asp-validation-for="FirstName" class="text-danger"></span>
+                   </div>
+                   <div class="field-wrap">
+                       <label asp-for="LastName">
+                           Last Name<span class="req">*</span>
+                       </label>
+                       <input asp-for="LastName" type="text" required autocomplete="off" />
+                       <span asp-validation-for="LastName" class="text-danger"></span>
+                   </div>
+               </div>
+               <div class="field-wrap">
+                   <label asp-for="Email">
+                       Email Address<span class="req">*</span>
+                   </label>
+                   <input asp-for="Email" type="email" required autocomplete="off" />
+                   <span asp-validation-for="Email" class="text-danger"></span>
+               </div>
+               <div class="field-wrap">
+                   <label asp-for="Password">
+                       Set A Password<span class="req">*</span>
+                   </label>
+                   <input asp-for="Password" type="password" required autocomplete="off" />
+                   <span asp-validation-for="Password" class="text-danger"></span>
+               </div>
+               <button type="submit" class="button button-block">Get Started</button>
+           </form>
+
+          </div>
+        </div>
+  </div> 
+</body>
+</html>
