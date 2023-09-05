@@ -1,7 +1,26 @@
+using Core.Models;
+using Microsoft.AspNetCore.Identity;
+using DAL;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<DAL.AppContext>(options =>
+{
+    options.UseLazyLoadingProxies()
+        .UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+
+//For identity app User settings
+builder.Services.AddIdentity<AppUser, IdentityRole>().
+    AddDefaultTokenProviders().AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<DAL.AppContext>().AddSignInManager<SignInManager<AppUser>>();
+builder.Services.AddScoped<UserManager<AppUser>>();
 
 var app = builder.Build();
 
