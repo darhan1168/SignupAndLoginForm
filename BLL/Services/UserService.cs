@@ -63,6 +63,20 @@ public class UserService : IUserService
         return new Result<bool>(true);
     }
 
+    public async Task<Result<bool>> LogoutAsync()
+    {
+        try
+        {
+            await _signInManager.SignOutAsync();
+            
+            return new Result<bool>(true);
+        }
+        catch (Exception ex)
+        {
+            return new Result<bool>(false, $"Failed to log out. Error message: {ex.Message}");
+        }
+    }
+
     public async Task<Result<AppUser>> FindUserByEmail(string email)
     {
         var appUser = await _userManager.FindByEmailAsync(email);

@@ -82,4 +82,19 @@ public class AccountController : Controller
         
         return View(model);
     }
+
+    [HttpGet]
+    public async Task<IActionResult> LogOut()
+    {
+        var logoutResult = await _userService.LogoutAsync();
+
+        if (!logoutResult.IsSuccessful)
+        {
+            TempData["ErrorMessage"] = logoutResult.Message;
+                
+            return RedirectToAction("Privacy", "Home");
+        }
+        
+        return RedirectToAction("LogIn", "Account");
+    }
 }
